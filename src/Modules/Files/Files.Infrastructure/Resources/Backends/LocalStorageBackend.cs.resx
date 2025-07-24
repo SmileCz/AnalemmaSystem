@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <data name="SourceFileEmpty" xml:space="preserve">
+    <value>Zdrojový soubor je prázdný.</value>
+  </data>
+    <data name="SourceFileTooLarge" xml:space="preserve">
+    <value>Soubor je příliš velký (maximálně 10 MB).</value>
+  </data>
+    <data name="FileSaveError" xml:space="preserve">
+    <value>Chyba při ukládání souboru: {0}</value>
+  </data>
+  <data name="Proc" xml:space="preserve">
+    <value />
+  </data>
+</root>
