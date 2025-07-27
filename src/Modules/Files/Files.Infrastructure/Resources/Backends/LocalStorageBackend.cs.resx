@@ -9,7 +9,13 @@
     <data name="FileSaveError" xml:space="preserve">
     <value>Chyba při ukládání souboru: {0}</value>
   </data>
-  <data name="Proc" xml:space="preserve">
-    <value />
+  <data name="DeleteSaveError" xml:space="preserve">
+    <value>Chyba při mazání souboru: {0}</value>
   </data>
+  <data name="SourceFileNotFound" xml:space="preserve">
+    <value>Soubor nebyl nalezen</value>
+  </data>
+    <data name="DirectoryNotExist" xml:space="preserve">
+        <value>Adresář {0] neexistuje</value>
+ </data>
 </root>
