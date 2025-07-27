@@ -18,13 +18,13 @@ public class LocalStorageBackendSaveFile
         _localizer = localizer;
         Directory.CreateDirectory(_root);
     }
-    
+
     private string ResolvePath(string? relativePath) =>
-        string.IsNullOrWhiteSpace(relativePath) ? 
-            _root : 
-            Path.Combine(_root, relativePath.Replace('/', Path.DirectorySeparatorChar));
-    
-    
+        string.IsNullOrWhiteSpace(relativePath)
+            ? _root
+            : Path.Combine(_root, relativePath.Replace('/', Path.DirectorySeparatorChar));
+
+
     public async Task<Result<bool>> SaveFileAsync(IFormFile file, string? relativePath)
     {
         try
@@ -35,7 +35,8 @@ public class LocalStorageBackendSaveFile
                 : relativePath;
 
             var fullPath = Path.GetFullPath(ResolvePath(path));
-            var directory = Path.GetDirectoryName(fullPath);    Directory.CreateDirectory(directory);
+            var directory = Path.GetDirectoryName(fullPath);
+            Directory.CreateDirectory(directory);
             await using var fs = new FileStream(fullPath, FileMode.Create, FileAccess.Write, FileShare.None, 81920,
                 true);
             await using var input = file.OpenReadStream();
@@ -76,7 +77,8 @@ public class LocalStorageBackendSaveFile
     public async Task<Result<IEnumerable<string>>> ListFilesAsync(string relativePath)
     {
         var directory = ResolvePath(relativePath);
-        if (!Directory.Exists(directory)) return Result<IEnumerable<string>>.Failure(_localizer["DirectoryNotExist", relativePath]);
+        if (!Directory.Exists(directory))
+            return Result<IEnumerable<string>>.Failure(_localizer["DirectoryNotExist", relativePath]);
         var files = await Task.Run(() => Directory.GetFiles(directory)).ConfigureAwait(false);
         var fileNames = files.Select(Path.GetFileName);
         return Result<IEnumerable<string>>.Success(fileNames);
@@ -85,12 +87,14 @@ public class LocalStorageBackendSaveFile
     public Result<string> GetAbsoluteFilePath(string relativePath)
     {
         var fullPath = Path.GetFullPath(ResolvePath(relativePath));
-        return !File.Exists(fullPath) ? Result<string>.Failure(_localizer["SourceFileNotExist"]) : Result<string>.Success(fullPath);
+        return !File.Exists(fullPath)
+            ? Result<string>.Failure(_localizer["SourceFileNotExist"])
+            : Result<string>.Success(fullPath);
     }
 
     public Result<bool> MoveFile(string from, string to)
     {
-       var fromFullPath = ResolvePath(from);
+        var fromFullPath = ResolvePath(from);
         var toFullPath = ResolvePath(to);
 
         if (!File.Exists(fromFullPath))
@@ -107,6 +111,5 @@ public class LocalStorageBackendSaveFile
         {
             return Result<bool>.Failure(_localizer["FileMoveError", ex.Message]);
         }
-            
     }
 }
